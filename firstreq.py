@@ -202,7 +202,7 @@ elif choice == '2':
                             "Job_Name": job_title,
                             "job_Id": job_id_number,
                             "Node_Name": node_name,
-                            "message": f"The log is too large to view Please open the Job {job_Id} to view the logs."
+                            "message": f"The log is too large to view Please open the Job {job_id_number} to view the logs."
                         }]
                     else:
                         # Remove all double quotes (") from the log data
