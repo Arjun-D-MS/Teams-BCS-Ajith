@@ -6,7 +6,7 @@ from dateutil import parser
 import json
 import re
 
-# Ensure login_token and choice are passed via command-line arguments
+# Ensure login_token and choice are passed via command-line arguments hi
 if len(sys.argv) < 3:
     print("Usage: python script.py <login_token> <choice> <TIME/JOBIDNUMBER>")
     sys.exit(1)
