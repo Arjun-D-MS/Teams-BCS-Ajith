@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import pytz
 from dateutil import parser  # Import dateutil.parserhttps://github.com/Arjun-D-MS/test-BCS.git
 
-def fetch_events(login_token, email, start_datetime_str, end_datetime_str, choice, user_timezone_str=None):
+def fetch_events(login_token, email, start_datetime_str, end_datetime_str, choice, user_timezone_str=None, subject_list=None):
     # Microsoft Graph API endpoint for fetching calendar view events App ID: 102908 deleted, new App ID: 102924
     url = f"https://graph.microsoft.com/v1.0/users/{email}/calendarView"
     
@@ -120,6 +120,30 @@ def fetch_events(login_token, email, start_datetime_str, end_datetime_str, choic
             print(f"##gbStart##copilot_ctable1_data##splitKeyValue##{json.dumps(output)}##gbEnd##")
             print(f"##gbStart##copilot_ctable2_data##splitKeyValue##{json.dumps(output1)}##gbEnd##")
             print(f"##gbStart##time_output##splitKeyValue##{json.dumps(timeoutput)}##gbEnd##")
+        elif choice =='4':
+            for event in events:
+               
+               subject = event.get('subject', "").lower()
+
+            # Skip canceled events
+               if "canceled" in subject:
+                 continue
+
+            # Filter by subject if subject_list is provided
+               if subject_list and subject not in subject_list:
+                 continue
+
+               attendees = event.get('attendees', [])
+               attendees_emails = [attendee['emailAddress']['address'] for attendee in attendees]
+
+               result = {
+                'Requested_Meetings_subject': event.get('subject', ""),
+                'attendees_emails': ";".join(attendees_emails)
+               }
+               output.append(result)
+               print(f"##gbStart##copilot_ctable4_data##splitKeyValue##{json.dumps(output)}##gbEnd##")
+               print(f"##gbStart##time_output##splitKeyValue##{json.dumps(timeoutput)}##gbEnd##")
+            
         else:
             no_choice_message = {
                 "Meetings": f"Wrong Choice"
@@ -205,4 +229,9 @@ if __name__ == "__main__":
     user_timezone_str = sys.argv[6] if len(sys.argv) > 6 else None
     
     # Call the function to fetch events
-    fetch_events(login_token, email, start_datetime_str, end_datetime_str, choice, user_timezone_str)
+    if choice == '4':
+        subject_names = sys.argv[7] if len(sys.argv) > 7 else ""  # Get subject names
+        subject_list = [subject.strip().lower() for subject in subject_names.split(',')]
+        fetch_events(login_token, email, start_datetime_str, end_datetime_str, choice, user_timezone_str, subject_list)
+    else:
+        fetch_events(login_token, email, start_datetime_str, end_datetime_str, choice, user_timezone_str)
