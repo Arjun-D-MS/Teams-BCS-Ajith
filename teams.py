@@ -107,7 +107,7 @@ def fetch_events(login_token, email, start_datetime_str, end_datetime_str, choic
                 #'organizer_email': organizer_email
                 #'attendees_emails': ";".join(attendees_emails)  # Join emails with semicolons
             }
-            timeoutput.appe(timeresult)
+            timeoutput.append(timeresult)
         # Print the output in the required format
         if choice == '1':
            print(f"##gbStart##copilot_ctable1_data##splitKeyValue##{json.dumps(output)}##gbEnd##")
