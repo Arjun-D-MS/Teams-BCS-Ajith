@@ -41,6 +41,7 @@ def fetch_events(login_token, email, start_datetime_str, end_datetime_str, choic
         
         output = []  # To hold the final result
         output1 = []
+        timeoutput = []
 
         # Check if user timezone is provided, if not default to UTC
         if user_timezone_str:
@@ -98,14 +99,27 @@ def fetch_events(login_token, email, start_datetime_str, end_datetime_str, choic
                 'attendees_emails': ";".join(attendees_emails)  # Join emails with semicolons
             }
             output1.append(result2)
+            timeresult = {
+                #'Requested_Meetings_subject': subject,
+                'Meeting_starting_time': start_time_formatted,
+                'Meeting_ending_time': end_time_formatted,
+                #'Meeting_Time': combined_time, 
+                #'organizer_email': organizer_email
+                #'attendees_emails': ";".join(attendees_emails)  # Join emails with semicolons
+            }
+            timeoutput.appe(timeresult)
         # Print the output in the required format
         if choice == '1':
            print(f"##gbStart##copilot_ctable1_data##splitKeyValue##{json.dumps(output)}##gbEnd##")
+           print(f"##gbStart##time_output##splitKeyValue##{json.dumps(timeoutput)}##gbEnd##")
+
         elif choice == '2':   
            print(f"##gbStart##copilot_ctable2_data##splitKeyValue##{json.dumps(output1)}##gbEnd##")
+           print(f"##gbStart##time_output##splitKeyValue##{json.dumps(timeoutput)}##gbEnd##")
         elif  choice == '3':
             print(f"##gbStart##copilot_ctable1_data##splitKeyValue##{json.dumps(output)}##gbEnd##")
             print(f"##gbStart##copilot_ctable2_data##splitKeyValue##{json.dumps(output1)}##gbEnd##")
+            print(f"##gbStart##time_output##splitKeyValue##{json.dumps(timeoutput)}##gbEnd##")
         else:
             no_choice_message = {
                 "Meetings": f"Wrong Choice"
