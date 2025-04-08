@@ -230,7 +230,7 @@ if __name__ == "__main__":
     
     # Call the function to fetch events
     if choice == '4':
-        subject_names = sys.argv[7] if len(sys.argv) > 7 else ""  # Get subject names
+        subject_names = f'''{sys.argv[7]}''' if len(sys.argv) > 7 else ""  # Get subject names
         subject_list = [subject.strip().lower() for subject in subject_names.split(',')]
         fetch_events(login_token, email, start_datetime_str, end_datetime_str, choice, user_timezone_str, subject_list)
     else:
