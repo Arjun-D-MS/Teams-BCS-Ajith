@@ -83,7 +83,7 @@ def fetch_events(login_token, email, start_datetime_str, end_datetime_str, choic
                 'Requested_Meetings_subject': subject,
                 #'Meeting_starting_time': start_time_formatted,
                 #'Meeting_ending_time': end_time_formatted,
-                'converted_time': combined_time, 
+                'Meeting_Time': combined_time, 
                 'organizer_email': organizer_email
                 #'attendees_emails': ";".join(attendees_emails)  # Join emails with semicolons
             }
