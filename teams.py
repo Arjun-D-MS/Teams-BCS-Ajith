@@ -94,9 +94,9 @@ def fetch_events(login_token, email, start_datetime_str, end_datetime_str, choic
 
             result2 = {
                 'Requested_Meetings_subject': subject,
-                #'Meeting_starting_time': start_time_formatted,
-                #'Meeting_ending_time': end_time_formatted,
-                #'organizer_email': organizer_email,
+                'Meeting_starting_time': start_time_formatted,
+                'Meeting_ending_time': end_time_formatted,
+                'organizer_email': organizer_email,
                 'attendees_emails': ";".join(attendees_emails)  # Join emails with semicolons
             }
             output1.append(result2)
@@ -112,11 +112,11 @@ def fetch_events(login_token, email, start_datetime_str, end_datetime_str, choic
         # Print the output in the required format
         if choice == '1':
            print(f"##gbStart##copilot_ctable1_data##splitKeyValue##{json.dumps(output)}##gbEnd##")
-           print(f"##gbStart##time_output##splitKeyValue##{json.dumps(timeoutput)}##gbEnd##")
+           print(f"##gbStart##time_output##splitKeyValue##{json.dumps(output1)}##gbEnd##")
 
         elif choice == '2':   
            print(f"##gbStart##copilot_ctable2_data##splitKeyValue##{json.dumps(output1)}##gbEnd##")
-           print(f"##gbStart##time_output##splitKeyValue##{json.dumps(timeoutput)}##gbEnd##")
+           print(f"##gbStart##time_output##splitKeyValue##{json.dumps(output1)}##gbEnd##")
         elif  choice == '3':
             print(f"##gbStart##copilot_ctable1_data##splitKeyValue##{json.dumps(output)}##gbEnd##")
             print(f"##gbStart##copilot_ctable2_data##splitKeyValue##{json.dumps(output1)}##gbEnd##")
