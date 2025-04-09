@@ -232,8 +232,18 @@ if __name__ == "__main__":
     
     # Call the function to fetch events
     if choice == '4':
-        subject_names = f'''{sys.argv[7]}''' if len(sys.argv) > 7 else ""  # Get subject names
-        subject_list = [subject.strip().lower() for subject in subject_names.split(',')]
+    # Get subject names from the argument (it's expected to be a JSON formatted list)
+        subject_names = sys.argv[7] if len(sys.argv) > 7 else ""
+    
+    # Try to load the string as a JSON list (if it's in the correct format)
+        try:
+            subject_list = json.loads(subject_names)
+        # Convert all subjects in the list to lowercase for case-insensitive comparison
+            subject_list = [subject.strip().lower() for subject in subject_list]
+        except json.JSONDecodeError:
+            print("Invalid subject list format.")
+            subject_list = []  # If there's an error, set an empty list
+
         fetch_events(login_token, email, start_datetime_str, end_datetime_str, choice, user_timezone_str, subject_list)
     else:
         fetch_events(login_token, email, start_datetime_str, end_datetime_str, choice, user_timezone_str)
