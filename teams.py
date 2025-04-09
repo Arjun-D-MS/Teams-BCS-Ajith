@@ -205,13 +205,21 @@ def format_combined_datetime(start_time_str, end_time_str, user_timezone):
         end_dt = pytz.utc.localize(end_dt).astimezone(user_timezone)
 
         def day_suffix(day):
-            return (
-                f"{day}st" if 10 < day % 100 < 20 else
-                {1: "st", 2: "nd", 3: "rd"}.get(day % 10, "th")
-            )
-
+            # Special case for 'teen' numbers
+            if 10 <= day % 100 <= 20:
+                return f"{day}th"
+            # Handle 'st', 'nd', 'rd' for other numbers
+            return f"{day}{ {1: 'st', 2: 'nd', 3: 'rd'}.get(day % 10, 'th') }"
+        
         formatted_start = start_dt.strftime(f"%B {day_suffix(start_dt.day)} %H:%M")
         formatted_end = end_dt.strftime("%H:%M")
+            # return (
+            #     f"{day}st" if 10 < day % 100 < 20 else
+            #     {1: "st", 2: "nd", 3: "rd"}.get(day % 10, "th")
+            # )
+
+        # formatted_start = start_dt.strftime(f"%B {day_suffix(start_dt.day)} %H:%M")
+        # formatted_end = end_dt.strftime("%H:%M")
 
         return f"{formatted_start}-{formatted_end}"
     except Exception as e:
